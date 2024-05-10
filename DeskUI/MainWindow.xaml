@@ -1,0 +1,452 @@
+﻿<Window x:Class="DeskUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeskUI" 
+        mc:Ignorable="d"
+        WindowStyle="None"
+        
+        AllowsTransparency="True"
+        Title="MainWindow" MinHeight="450" MinWidth="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="RoundedButtonStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="5" Background="#FFCF0337">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="black"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#7CB342"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Ellipse">
+            <Setter Property="Width" Value="5"/>
+            <Setter Property="Height" Value="5"/>
+            <Setter Property="Fill" Value="#FFD2332D"/>
+            <Setter Property="Margin" Value="5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Storyboard x:Key="NetflixLoadingAnimation" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="circle1" 
+                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+                             From="-50" To="150" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle2" 
+                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+                             From="-150" To="50" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle3" 
+                             Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+                             From="100" To="-100" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle4" 
+                 Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+                 From="-200" To="0" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle5" 
+     Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+     From="250" To="-50" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle6" 
+     Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+     From="-300" To="-100" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle7" 
+                        Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+                        From="-50" To="150" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle8" 
+                        Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+                        From="150" To="-50" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle9" 
+                        Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+                        From="-50" To="250" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle10" 
+            Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+            From="-300" To="0" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle11" 
+Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+From="450" To="-150" Duration="0:0:0.5" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="circle12" 
+Storyboard.TargetProperty="(Ellipse.RenderTransform).(TranslateTransform.X)"
+From="-400" To="-200" Duration="0:0:0.5" AutoReverse="True"/>
+        </Storyboard>
+        <Style TargetType="Window" x:Key="CustomWindowStyle">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome CaptionHeight="0" 
+                                   ResizeBorderThickness="6" />
+                </Setter.Value>
+            </Setter>
+            
+        </Style>
+       
+            <Style TargetType="{x:Type ScrollBar}">
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="Width" Value="4"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid Background="Transparent">
+                                <Track x:Name="PART_Track" IsDirectionReversed="True">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.LineUpCommand}"
+                                       Opacity="0"
+                                       Focusable="False"/>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Background="#FFCE3678"
+                                Margin="2,2,2,2"
+                                BorderBrush="#FFCE3678"
+                                BorderThickness="0"
+                                        Width="4"
+                               />
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static ScrollBar.LineDownCommand}"
+                                       Opacity="0"
+                                       Focusable="False"/>
+                                    </Track.IncreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="70"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0" Background="{Binding Theme.BackgroundColor1}" >
+            <Grid.RowDefinitions>
+
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0">
+                <StackPanel Width="auto"  HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Image  Width="44" />
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="0">
+                <Button x:Name="CloseButton"
+                    Margin="0,0,0,0"
+                    
+                    Click="CloseButton_Click"
+                    Content="✕"
+                    Foreground="{Binding Theme.Forecolor1}"
+                        Background="{Binding Theme.BackgroundColor1}"
+                        HorizontalAlignment="Right"
+                        Width="50"
+                        Height="38"
+                        FontSize="24"
+                        IsEnabled="True"
+                        BorderBrush="{Binding Theme.BackgroundColor1}"
+                        FontFamily="Arial Narrow"
+                        BorderThickness="0"
+                        Padding="0"
+                        WindowChrome.IsHitTestVisibleInChrome="True" FontStretch="SemiCondensed">
+                    <!-- Add CornerRadius property to the Button -->
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    CornerRadius="4"
+                                        Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                          VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#FF9C1717"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#FFBE3636"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="MinMaxButton"
+     Margin="0,0,50,0"
+     
+     Click="CloseButton_Click"
+     Content="&#9744;"
+     Foreground="{Binding Theme.Forecolor1}"
+         Background="{Binding Theme.BackgroundColor1}"
+         HorizontalAlignment="Right"
+         Width="50"
+         Height="38"
+         FontSize="24"
+         IsEnabled="True"
+         BorderBrush="{Binding Theme.BackgroundColor1}"
+         FontFamily="Arial Narrow"
+         BorderThickness="0"
+         Padding="0"
+         WindowChrome.IsHitTestVisibleInChrome="True" FontStretch="SemiCondensed">
+                    <!-- Add CornerRadius property to the Button -->
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                     CornerRadius="4"
+                         Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+           VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="White"/>
+                                    <Setter Property="Foreground" Value="black"/>
+
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="white"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="ReduceButton"
+    Margin="0,0,100,0"
+    
+    Click="CloseButton_Click"
+    Content="&#8212;"
+    Foreground="{Binding Theme.Forecolor1}"
+        Background="{Binding Theme.BackgroundColor1}"
+        HorizontalAlignment="Right"
+        Width="50"
+        Height="38"
+        FontSize="30"
+        IsEnabled="True"
+        BorderBrush="{Binding Theme.BackgroundColor1}"
+        FontFamily="Arial Narrow"
+        BorderThickness="0"
+        Padding="0"
+        WindowChrome.IsHitTestVisibleInChrome="True" FontStretch="SemiCondensed">
+                    <!-- Add CornerRadius property to the Button -->
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                    CornerRadius="4"
+                        Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+          VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="white"/>
+                                    <Setter  Property="Foreground" Value="Black" />
+
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="white"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+            
+
+
+
+        </Grid>
+        <Grid  Grid.Row="1" Background="{Binding Theme.BackgroundColor1}" >
+            <Ellipse  Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle1" Fill="#FFCE1B1B">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle2">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle3">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle4" Fill="#FFCE1B1B">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle5">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse  Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle6">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle7" Fill="#FFCE1B1B">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle8">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}"  VerticalAlignment="Top" x:Name="circle9">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse  Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle10" Fill="#FFCE1B1B">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}"  VerticalAlignment="Top" x:Name="circle11">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Visibility="{Binding LoadingVisibility}" VerticalAlignment="Top" x:Name="circle12">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Button Visibility="{Binding PreviousButtonVisibility}" x:Name="previous_button"
+    Margin="5,5,0,0"
+    
+    Command="{Binding BackToHomeCommand}"
+    Content="&#10096;"
+    Foreground="{Binding Theme.Forecolor1}"
+        Background="{Binding Theme.BackgroundColor1}"
+        HorizontalAlignment="Left"
+        Width="50"
+        Height="38"
+        FontSize="24"
+        IsEnabled="True"
+        BorderBrush="{Binding Theme.BackgroundColor1}"
+        FontFamily="Arial Narrow"
+        BorderThickness="0"
+        Padding="0"
+        WindowChrome.IsHitTestVisibleInChrome="True" FontStretch="SemiCondensed">
+                <!-- Add CornerRadius property to the Button -->
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                    CornerRadius="16"
+                        Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{Binding Theme.BackgroundColor1}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{Binding Theme.BackgroundColor1}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <ToggleButton Visibility="{Binding OptionButtonVisibility}" x:Name="menuToggle"
+              Margin="0,5,5,0"
+              Content="&#8285;"
+              Foreground="{Binding Theme.Forecolor1}"
+              Background="{Binding Theme.BackgroundColor1}"
+              HorizontalAlignment="Right"
+              Width="50"
+              Height="38"
+              FontSize="36"
+              IsChecked="False"
+              Click="MenuToggle_Click"
+              BorderBrush="{Binding Theme.BackgroundColor1}"
+              FontFamily="Arial Narrow"
+              BorderThickness="0"
+              Padding="0"
+              WindowChrome.IsHitTestVisibleInChrome="True"
+              FontStretch="SemiCondensed"
+              ContextMenuOpening="menuToggle_ContextMenuOpening" ContextMenuClosing="menuToggle_ContextMenuClosed"
+              >
+                <!-- Add CornerRadius property to the ToggleButton -->
+                <ToggleButton.Template>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="border"
+                    CornerRadius="6"
+                    Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="white"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </ToggleButton.Template>
+                <ToggleButton.ContextMenu>
+                    <ContextMenu BorderThickness="1">
+                        <ContextMenu.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="12"/>
+                                <Setter Property="Background" Value="#FF0A1A59"/>
+                                <Setter Property="BorderBrush" Value="#FF0A1A59"/>
+                            </Style>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Background" Value="#FFC5BBBB"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="FontSize" Value="24"/>
+                                <Setter Property="Width" Value="300"/>
+                                <Setter Property="Height" Value="50"/>
+                            </Style>
+                        </ContextMenu.Resources>
+                        <MenuItem Foreground="Black" Header="Settings" Click="Settings_Click"/>
+                    </ContextMenu>
+                </ToggleButton.ContextMenu>
+            </ToggleButton>
+
+            <TextBlock Visibility="{Binding SecondNavLogoVisibility}" HorizontalAlignment="Left" Width="120" Margin="{Binding LeftMarginLogo}" VerticalAlignment="Center" Foreground="Red" Text="Brand" FontSize="36" FontFamily="Arial Rounded MT Bold"/>
+            <Button Visibility="{Binding SignInButtonVisibility}" Command="{Binding SwitchToLoginCommand}"
+        x:Name="Login"
+        Margin="0,0,10,0"
+        Style="{StaticResource RoundedButtonStyle}"
+        Content="Login"
+        Width="80"
+        Height="45"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Right"
+        Foreground="White"/>
+        </Grid>
+        <Grid Grid.Row="2" Background="Black" >
+            <UserControl Content="{Binding SelectedPage , Mode=TwoWay}"/>
+        </Grid>
+    </Grid>
+    <Window.Style>
+        <StaticResource ResourceKey="CustomWindowStyle"/>
+    </Window.Style>
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="40"               
+        ResizeBorderThickness="4"       
+        CornerRadius="5"                
+        GlassFrameThickness="0"        
+        NonClientFrameEdges="None" UseAeroCaptionButtons="True"/>
+            
+    </WindowChrome.WindowChrome>
+</Window>
